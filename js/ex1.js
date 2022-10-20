@@ -33,26 +33,30 @@ const getCharacters = houseCode => {
       return []; // Empty array
   }
 };
-var gotHouses = document.querySelector( '#house' );
-var characters = document.querySelector( '#characters' );
-
-for( house of houses ) {
-  let option = document.createElement( 'option' );
-  option.value = house.code;
-  option.innerText = house.name;
-  gotHouses.append( option );
+const gotHouses = document.querySelector( '#house' );
+const characters = document.querySelector( '#characters' );
+const populateHouses = () => {
+  for( house of houses ) {
+    let option = document.createElement( 'option' );
+    option.value = house.code;
+    option.innerText = house.name;
+    gotHouses.append( option );
+  }
 }
-
-gotHouses.addEventListener( 'change', function() {
-  let e = document.getElementById( "house" );
-  let selectedHouseCode = e.value;
-  let selectedHouseName = e.options[e.selectedIndex].text;
-  let chars = getCharacters( selectedHouseCode );
+const showCharacters = ( chars ) => {
   characters.innerHTML = '';
   for( var i = 0; i < chars.length; i++ ) {
     let character = document.createElement( 'li' );
     character.innerText = chars[i];
     characters.append( character );
   }
+}
 
+populateHouses();
+gotHouses.addEventListener( 'change',  function() {
+  let e = document.getElementById( "house" );
+  let selectedHouseCode = e.value;
+  let selectedHouseName = e.options[e.selectedIndex].text;
+  let chars = getCharacters( selectedHouseCode );
+  showCharacters( chars );
 });
